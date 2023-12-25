@@ -1,15 +1,13 @@
-const cookieSession = require('cookie-session');
+const session = require('express-session');
 require('dotenv').config();
 
 const serverSessionSecret = () => {
   return process.env.SESSION_SECRET;
 };
 
-module.exports = cookieSession({
+module.exports = session({
   secret: serverSessionSecret() || 'secret',
-  key: 'user', // this is the name of the req.variable. 'user' is convention, but not required
-  resave: 'false',
+  resave: false,
   saveUninitialized: false,
-  maxAge: 1000 * 60 * 60 * 24 * 7,
-  secure: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7, secure: false },
 });
